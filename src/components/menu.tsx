@@ -1,40 +1,43 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { useCurrentRoute } from "../hooks/useCurrentRoute";
 import { clsx } from "clsx";
+import { TitleText } from "./TitleText";
 import * as colors from "tailwindcss/colors";
-import { usePathname } from "next/navigation";
-import { TitleText } from "@/components/TitleText";
+
+const scalingAnimation = {
+	goFat: {
+		fontSize: "8.8rem",
+		lineHeight: "7.6rem",
+		"--color": colors.gray[900],
+	},
+	goSmol: {
+		fontSize: "1rem",
+		lineHeight: "1.4rem",
+		"--color": colors.gray[400],
+	},
+};
+
+const transition = {
+	duration: 0.6,
+	ease: [0.83, 0, 0.17, 1],
+};
+
+const defaultStyle =
+	"text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit";
+const selectedStyle =
+	"user-select-none pointer-events-none select-none font-bold";
 
 export default function Menu() {
-	const path = usePathname();
-	const [route, setRoute] = React.useState(path);
+	const currentRoute = useCurrentRoute();
 
-	useEffect(() => {
-		setRoute(path);
-	}, [path]);
-
-	const scalingAnimation = {
-		goFat: {
-			fontSize: "8.8rem",
-			lineHeight: "7.6rem",
-			"--color": colors.gray[900],
-		},
-		goSmol: {
-			fontSize: "1rem",
-			lineHeight: "1.4rem",
-			"--color": colors.gray[400],
-		},
-	};
-
-	const defaultStyle = `text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit`;
-	const selectedStyle =
-		"user-select-none pointer-events-none select-none font-bold";
-
-	const transition = {
-		duration: 0.6,
-		ease: [0.83, 0, 0.17, 1],
+	const handleClick = (
+		e: React.MouseEvent<HTMLAnchorElement>,
+		href: string
+	) => {
+		e.preventDefault();
+		window.history.pushState({}, "", href);
+		// window.dispatchEvent(new PopStateEvent("popstate"));
 	};
 
 	return (
@@ -42,48 +45,68 @@ export default function Menu() {
 			<motion.div
 				className={clsx(
 					defaultStyle,
-					path == "/" && selectedStyle,
+					currentRoute == "/" && selectedStyle,
 					"col-span-5 origin-top-right text-right"
 				)}
+				layout
+				layoutId="/"
 				variants={scalingAnimation}
-				initial={path == "/" ? "goFat" : "goSmol"}
-				animate={path == "/" ? "goFat" : "goSmol"}
+				initial={currentRoute == "/" ? "goFat" : "goSmol"}
+				animate={currentRoute == "/" ? "goFat" : "goSmol"}
 				transition={transition}
 				key="/">
-				<TitleText text="Works," href="/" word={true} index={0} />
+				<a href={"/"} onClick={(e) => handleClick(e, "/")}>
+					<TitleText
+						text="Works,"
+						href="/"
+						word={currentRoute == "/"}
+						index={0}
+					/>
+				</a>
 			</motion.div>
 			<motion.div className="col-span-auto flex flex-row">
 				<motion.div
 					className={clsx(
 						defaultStyle,
-						path == "/about" && selectedStyle,
+						currentRoute == "/about" && selectedStyle,
 						"col-span-5 origin-top-right text-right"
 					)}
+					layout
+					layoutId="/about"
 					variants={scalingAnimation}
-					initial={path == "/about" ? "goFat" : "goSmol"}
-					animate={path == "/about" ? "goFat" : "goSmol"}
+					initial={currentRoute == "/about" ? "goFat" : "goSmol"}
+					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
 					transition={transition}
 					key="/about">
-					<TitleText
-						text="About,"
-						href="/about"
-						word={path == "/about"}
-						index={0}
-					/>
+					<a href={"/about"} onClick={(e) => handleClick(e, "/about")}>
+						<TitleText
+							text="About,"
+							href="/about"
+							word={currentRoute == "/about"}
+							index={0}
+						/>
+					</a>
 				</motion.div>
 				<motion.div
-					className={clsx(defaultStyle, path == "/contact" && selectedStyle)}
+					className={clsx(
+						defaultStyle,
+						currentRoute == "/contact" && selectedStyle
+					)}
+					layout
+					layoutId="/contact"
 					variants={scalingAnimation}
-					initial={path == "/contact" ? "goFat" : "goSmol"}
-					animate={path == "/contact" ? "goFat" : "goSmol"}
+					initial={currentRoute == "/contact" ? "goFat" : "goSmol"}
+					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					transition={transition}
 					key="/contact">
-					<TitleText
-						text="Contact"
-						href="/contact"
-						word={path == "/contact"}
-						index={0}
-					/>
+					<a href={"/contact"} onClick={(e) => handleClick(e, "/contact")}>
+						<TitleText
+							text="Contact"
+							href="/contact"
+							word={currentRoute == "/contact"}
+							index={0}
+						/>
+					</a>
 				</motion.div>
 			</motion.div>
 		</div>
