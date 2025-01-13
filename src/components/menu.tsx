@@ -8,22 +8,24 @@ import colors from "tailwindcss/colors";
 export default function Menu() {
 	const currentRoute = useCurrentRoute();
 
+	const transition = {
+		duration: 0.6,
+		ease: [0.83, 0, 0.17, 1],
+	};
+
 	const scalingAnimation = {
 		goFat: {
 			fontSize: "8.8rem",
 			lineHeight: "7.6rem",
 			"--color": colors.gray[900],
+			transition: transition,
 		},
 		goSmol: {
 			fontSize: "1rem",
 			lineHeight: "1.4rem",
 			"--color": colors.gray[400],
+			transition: transition,
 		},
-	};
-
-	const transition = {
-		duration: 0.6,
-		ease: [0.83, 0, 0.17, 1],
 	};
 
 	const defaultStyle =
@@ -53,7 +55,6 @@ export default function Menu() {
 				initial={currentRoute == "/" ? "goFat" : "goSmol"}
 				animate={currentRoute == "/" ? "goFat" : "goSmol"}
 				exit={currentRoute == "/" ? "goFat" : "goSmol"}
-				transition={transition}
 				key="/">
 				<a onClick={(e) => handleClick(e, "/")}>
 					<TitleText text="Works," word={currentRoute == "/"} index={0} />
@@ -71,7 +72,6 @@ export default function Menu() {
 					initial={currentRoute == "/about" ? "goFat" : "goSmol"}
 					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/about" ? "goFat" : "goSmol"}
-					transition={transition}
 					key="/about">
 					<a onClick={(e) => handleClick(e, "/about")}>
 						<TitleText
@@ -91,7 +91,6 @@ export default function Menu() {
 					initial={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/contact" ? "goFat" : "goSmol"}
-					transition={transition}
 					key="/contact">
 					<a onClick={(e) => handleClick(e, "/contact")}>
 						<TitleText

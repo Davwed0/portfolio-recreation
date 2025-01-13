@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import * as animations from "./animations";
 
 export function TitleText({
 	text,
@@ -9,39 +10,14 @@ export function TitleText({
 	word?: boolean;
 	index: number;
 }) {
-	const animation = {
-		word: {
-			start: { translateY: "100%" },
-			end: { translateY: "0%" },
-		},
-		character: {
-			start: { translateY: "200%" },
-			end: {
-				translateY: "0%",
-			},
-		},
-	};
-
-	const transition = {
-		word: {
-			ease: [0.76, 0, 0.24, 1],
-			duration: 0.8,
-			staggerChildren: 0.1,
-		},
-		character: {
-			ease: [0.61, 1, 0.88, 1],
-			duration: 0.4,
-		},
-	};
-
 	return (
 		<div className={`${word ? "" : "overflow-hidden"}`}>
 			<motion.div
 				initial="start"
 				animate="end"
-				variants={animation.word}
+				variants={animations.textRevealAnimation.word}
 				transition={{
-					...transition.word,
+					...animations.textRevealTransition.word,
 					delay: index * 0.2,
 				}}
 				className="inline-flex">
@@ -49,9 +25,9 @@ export function TitleText({
 					? text.split("").map((char, charIndex) => (
 							<motion.div
 								key={charIndex}
-								variants={animation.character}
+								variants={animations.textRevealAnimation.character}
 								transition={{
-									...transition.character,
+									...animations.textRevealTransition.character,
 								}}>
 								{char}
 							</motion.div>

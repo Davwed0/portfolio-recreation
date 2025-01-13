@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import useWindowSize from "./hooks/useWindowSize";
 import Menu from "./components/menu";
 
+import About from "./pages/about";
 import Works from "./pages/works";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 				<Menu />
 				<Routes location={location} key={location.pathname}>
 					<Route index element={<Works />} />
-					<Route path="/about" element={<div />} />
+					<Route path="/about" element={<About />} />
 					<Route path="/contacts" element={<div />} />
 				</Routes>
 			</AnimatePresence>
