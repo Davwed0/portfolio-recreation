@@ -1,19 +1,27 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import WorksPage from "./pages/WorksPage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
 import { AnimatePresence } from "framer-motion";
-import Menu from "./components/Menu";
+import { useEffect } from "react";
+import useWindowSize from "./hooks/useWindowSize";
+import Menu from "./components/menu";
+
+import Works from "./pages/works";
 
 function App() {
 	const location = useLocation();
+	const windowSize = useWindowSize();
+
+	useEffect(() => {
+		document
+			.getElementById("root")
+			?.style.setProperty("--size", `${windowSize.width}`);
+	}, [windowSize]);
 
 	return (
 		<>
-			<AnimatePresence mode="wait">
+			<AnimatePresence>
 				<Menu />
 				<Routes location={location} key={location.pathname}>
-					<Route index element={<div />} />
+					<Route index element={<Works />} />
 					<Route path="/about" element={<div />} />
 					<Route path="/contacts" element={<div />} />
 				</Routes>
