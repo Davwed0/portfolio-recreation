@@ -1,19 +1,12 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { useCurrentRoute } from "../hooks/useCurrentRoute";
 import { clsx } from "clsx";
-import * as colors from "tailwindcss/colors";
-import { usePathname } from "next/navigation";
-import { TitleText } from "@/components/TitleText";
+import { TitleText } from "./titleText";
+import colors from "tailwindcss/colors";
 
 export default function Menu() {
-	const path = usePathname();
-	const [route, setRoute] = React.useState(path);
-
-	useEffect(() => {
-		setRoute(path);
-	}, [path]);
+	const currentRoute = useCurrentRoute();
 
 	const scalingAnimation = {
 		goFat: {
@@ -28,62 +21,85 @@ export default function Menu() {
 		},
 	};
 
-	const defaultStyle = `text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit`;
-	const selectedStyle =
-		"user-select-none pointer-events-none select-none font-bold";
-
 	const transition = {
 		duration: 0.6,
 		ease: [0.83, 0, 0.17, 1],
 	};
 
+	const defaultStyle =
+		"text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit";
+	const selectedStyle =
+		"user-select-none pointer-events-none select-none font-bold";
+
+	const handleClick = (
+		e: React.MouseEvent<HTMLAnchorElement>,
+		href: string
+	) => {
+		e.preventDefault();
+		window.history.pushState({}, "", href);
+		window.dispatchEvent(new PopStateEvent("popstate"));
+	};
+
 	return (
-		<div className="fixed grid grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4 w-full space-x-1 h-[8rem] overflow-hidden z-50">
+		<div className="fixed grid grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4 w-[calc(100vw-4rem)] space-x-1 h-[8rem] overflow-hidden z-50">
 			<motion.div
 				className={clsx(
 					defaultStyle,
-					path == "/" && selectedStyle,
+					currentRoute == "/" && selectedStyle,
 					"col-span-5 origin-top-right text-right"
 				)}
+				layoutId="/"
 				variants={scalingAnimation}
-				initial={path == "/" ? "goFat" : "goSmol"}
-				animate={path == "/" ? "goFat" : "goSmol"}
+				initial={currentRoute == "/" ? "goFat" : "goSmol"}
+				animate={currentRoute == "/" ? "goFat" : "goSmol"}
+				exit={currentRoute == "/" ? "goFat" : "goSmol"}
 				transition={transition}
 				key="/">
-				<TitleText text="Works," href="/" word={true} index={0} />
+				<a onClick={(e) => handleClick(e, "/")}>
+					<TitleText text="Works," word={currentRoute == "/"} index={0} />
+				</a>
 			</motion.div>
-			<motion.div className="col-span-auto flex flex-row">
+			<motion.div className="col-span-auto flex flex-row gap-x-4">
 				<motion.div
 					className={clsx(
 						defaultStyle,
-						path == "/about" && selectedStyle,
+						currentRoute == "/about" && selectedStyle,
 						"col-span-5 origin-top-right text-right"
 					)}
+					layoutId="/about"
 					variants={scalingAnimation}
-					initial={path == "/about" ? "goFat" : "goSmol"}
-					animate={path == "/about" ? "goFat" : "goSmol"}
+					initial={currentRoute == "/about" ? "goFat" : "goSmol"}
+					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
+					exit={currentRoute == "/about" ? "goFat" : "goSmol"}
 					transition={transition}
 					key="/about">
-					<TitleText
-						text="About,"
-						href="/about"
-						word={path == "/about"}
-						index={0}
-					/>
+					<a onClick={(e) => handleClick(e, "/about")}>
+						<TitleText
+							text="About,"
+							word={currentRoute == "/about"}
+							index={1}
+						/>
+					</a>
 				</motion.div>
 				<motion.div
-					className={clsx(defaultStyle, path == "/contact" && selectedStyle)}
+					className={clsx(
+						defaultStyle,
+						currentRoute == "/contact" && selectedStyle
+					)}
+					layoutId="/contact"
 					variants={scalingAnimation}
-					initial={path == "/contact" ? "goFat" : "goSmol"}
-					animate={path == "/contact" ? "goFat" : "goSmol"}
+					initial={currentRoute == "/contact" ? "goFat" : "goSmol"}
+					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
+					exit={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					transition={transition}
 					key="/contact">
-					<TitleText
-						text="Contact"
-						href="/contact"
-						word={path == "/contact"}
-						index={0}
-					/>
+					<a onClick={(e) => handleClick(e, "/contact")}>
+						<TitleText
+							text="Contact"
+							word={currentRoute == "/contact"}
+							index={2}
+						/>
+					</a>
 				</motion.div>
 			</motion.div>
 		</div>

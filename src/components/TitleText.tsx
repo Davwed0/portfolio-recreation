@@ -1,17 +1,11 @@
-"use client";
-
-import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 export function TitleText({
 	text,
-	href,
 	word = false,
 	index,
 }: {
 	text: string;
-	href: string;
 	word?: boolean;
 	index: number;
 }) {
@@ -32,7 +26,7 @@ export function TitleText({
 		word: {
 			ease: [0.76, 0, 0.24, 1],
 			duration: 0.8,
-			staggerChildren: 0.05,
+			staggerChildren: 0.1,
 		},
 		character: {
 			ease: [0.61, 1, 0.88, 1],
@@ -41,31 +35,29 @@ export function TitleText({
 	};
 
 	return (
-		<Link href={href}>
-			<div className={`${word ? "" : "overflow-hidden"}`}>
-				<motion.div
-					initial="start"
-					animate="end"
-					variants={animation.word}
-					transition={{
-						...transition.word,
-						delay: index * 0.2,
-					}}
-					className="inline-flex">
-					{word
-						? text.split("").map((char, charIndex) => (
-								<motion.div
-									key={charIndex}
-									variants={animation.character}
-									transition={{
-										...transition.character,
-									}}>
-									{char}
-								</motion.div>
-						  ))
-						: text}
-				</motion.div>
-			</div>
-		</Link>
+		<div className={`${word ? "" : "overflow-hidden"}`}>
+			<motion.div
+				initial="start"
+				animate="end"
+				variants={animation.word}
+				transition={{
+					...transition.word,
+					delay: index * 0.2,
+				}}
+				className="inline-flex">
+				{word
+					? text.split("").map((char, charIndex) => (
+							<motion.div
+								key={charIndex}
+								variants={animation.character}
+								transition={{
+									...transition.character,
+								}}>
+								{char}
+							</motion.div>
+					  ))
+					: text}
+			</motion.div>
+		</div>
 	);
 }
