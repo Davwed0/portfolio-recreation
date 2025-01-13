@@ -6,13 +6,6 @@ A recreation of Grégory Lallé's creative developer portfolio website, built wi
 
 All design credits go to [Grégory Lallé](https://gregorylalle.com/). This is an educational recreation project to learn and practice modern web development techniques.
 
-## 🛠️ Tech Stack
-
-- [Next.js](https://nextjs.org/) - React framework for production
-- [React](https://reactjs.org/) - UI library
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-
 ## ✨ Features
 
 - Smooth page transitions
@@ -53,4 +46,4 @@ npm run dev
 yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
