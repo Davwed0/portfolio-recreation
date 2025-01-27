@@ -2,31 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useCurrentRoute } from "../hooks/useCurrentRoute";
 import { clsx } from "clsx";
-import { TitleText } from "./titleText";
-import colors from "tailwindcss/colors";
+import { TitleText } from "./TitleText";
+import * as animations from "./animations";
 
 export default function Menu() {
 	const currentRoute = useCurrentRoute();
-
-	const transition = {
-		duration: 0.6,
-		ease: [0.83, 0, 0.17, 1],
-	};
-
-	const scalingAnimation = {
-		goFat: {
-			fontSize: "8.8rem",
-			lineHeight: "7.6rem",
-			"--color": colors.gray[900],
-			transition: transition,
-		},
-		goSmol: {
-			fontSize: "1rem",
-			lineHeight: "1.4rem",
-			"--color": colors.gray[400],
-			transition: transition,
-		},
-	};
 
 	const defaultStyle =
 		"text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit";
@@ -51,7 +31,7 @@ export default function Menu() {
 					"col-span-5 origin-top-right text-right"
 				)}
 				layoutId="/"
-				variants={scalingAnimation}
+				variants={animations.scalingAnimation}
 				initial={currentRoute == "/" ? "goFat" : "goSmol"}
 				animate={currentRoute == "/" ? "goFat" : "goSmol"}
 				exit={currentRoute == "/" ? "goFat" : "goSmol"}
@@ -65,10 +45,10 @@ export default function Menu() {
 					className={clsx(
 						defaultStyle,
 						currentRoute == "/about" && selectedStyle,
-						"col-span-5 origin-top-right text-right"
+						"col-span-5 origin-top-left text-left"
 					)}
 					layoutId="/about"
-					variants={scalingAnimation}
+					variants={animations.scalingAnimation}
 					initial={currentRoute == "/about" ? "goFat" : "goSmol"}
 					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/about" ? "goFat" : "goSmol"}
@@ -87,7 +67,7 @@ export default function Menu() {
 						currentRoute == "/contact" && selectedStyle
 					)}
 					layoutId="/contact"
-					variants={scalingAnimation}
+					variants={animations.scalingAnimation}
 					initial={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/contact" ? "goFat" : "goSmol"}

@@ -46,6 +46,28 @@ export const boxAnimation = {
 	},
 };
 
+export const scalingDuration = 0.6;
+
+export const scalingTransition = {
+	duration: scalingDuration,
+	ease: [0.76, 0, 0.24, 1],
+};
+
+export const scalingAnimation = {
+	goFat: {
+		fontSize: "8.8rem",
+		lineHeight: "7.6rem",
+		"--color": "#111827",
+		transition: scalingTransition,
+	},
+	goSmol: {
+		fontSize: "1rem",
+		lineHeight: "1.4rem",
+		"--color": "#9ca3af",
+		transition: scalingTransition,
+	},
+};
+
 export const textRevealTransition = {
 	word: {
 		ease: [0.76, 0, 0.24, 1],
@@ -59,45 +81,42 @@ export const textRevealTransition = {
 	slideIn: {
 		ease: [0.61, 1, 0.88, 1],
 		duration: 0.6,
+		delay: 0.5,
 	},
 };
 
 export const textRevealAnimation = {
 	word: {
-		start: {
+		initial: {
 			translateY: "100%",
-			transition: textRevealTransition.word,
 		},
-		end: {
+		animate: {
 			translateY: "0%",
-			transition: textRevealTransition.word,
 		},
 	},
 	character: {
-		start: {
-			translateY: "200%",
-			transition: textRevealTransition.character,
+		initial: {
+			translateY: "100%",
 		},
-		end: {
+		animate: {
 			translateY: "0%",
-			transition: textRevealTransition.character,
 		},
 	},
 	slideIn: {
 		initial: {
 			translateY: "200%",
 			opacity: 0,
-			transition: textRevealTransition.slideIn,
+			transition: { ...textRevealTransition.slideIn },
 		},
 		animate: {
-			translateY: ["200%", "200%", "0%"],
-			opacity: [0, 0, 1],
-			transition: textRevealTransition.slideIn,
+			translateY: "0%",
+			opacity: 1,
+			transition: { ...textRevealTransition.slideIn },
 		},
 		exit: {
 			translateY: "-200%",
 			opacity: 0,
-			transition: textRevealTransition.slideIn,
+			transition: { ...textRevealTransition.slideIn, delay: 0 },
 		},
 	},
 };

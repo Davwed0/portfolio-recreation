@@ -46,19 +46,15 @@ export default function Works() {
 					))}
 				</motion.div>
 
-				<motion.div className="sticky col-start-6 col-span-3">
+				<motion.div className="sticky col-start-6 col-span-3 flex flex-col">
 					{clients.map((client, index) => (
-						<motion.div
+						<motion.span
 							layout="position"
-							variants={animation.textRevealAnimation.word}
-							initial="initial"
-							animate="animate"
-							exit="exit"
-							layoutId={`client_name_${client.replace(" ", "_")}`}
-							key={`client_name_${client.replace(" ", "_")}`}
+							layoutId={`client_name_${client.replace(" ", "_")}_text`}
+							key={`client_name_${client.replace(" ", "_")}_text`}
 							className="text-[0.8rem] tracking-wide uppercase font-semibold">
 							{client}
-						</motion.div>
+						</motion.span>
 					))}
 				</motion.div>
 

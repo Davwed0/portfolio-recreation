@@ -36,33 +36,62 @@ const clients = {
 	],
 };
 
+const itemVariants = {
+	initial: {},
+	animate: {},
+};
+
+const containerVariants = {
+	initial: {},
+	animate: {
+		transition: {
+			staggerChildren: 0.05,
+			delayChildren: 0.5,
+		},
+	},
+};
+
 export default function AboutPage() {
 	return (
 		<>
 			<div className="absolute top-0 left-0 pt-[45vh] p-4 grid grid-cols-[repeat(16,minmax(0,1fr))] grid-rows-8 gap-y-[20vh] gap-x-4 w-full space-x-1 overflow-hidden h-full">
-				<motion.div className="col-start-1 col-span-4"></motion.div>
-				<motion.div className="sticky col-start-6 col-span-6">
+				<div className="col-start-1 col-span-4"></div>
+				<motion.div
+					className="sticky col-start-6 col-span-6"
+					variants={containerVariants}
+					initial="initial"
+					animate="animate">
 					{Object.entries(clients).map(([client, data], index) => (
-						<motion.div className="flex justify-start text-nowrap text-[0.8rem] tracking-wide font-semibold overflow-hidden break-after-auto gap-1">
+						<motion.div
+							className="flex justify-start text-nowrap text-[0.8rem] tracking-wide font-semibold overflow-hidden"
+							key={`client_${index}_text`}
+							variants={itemVariants}>
 							<motion.span
 								initial="initial"
 								animate="animate"
 								exit="exit"
-								variants={animation.textRevealAnimation.slideIn}>
+								className="pr-1"
+								variants={animation.textRevealAnimation.slideIn}
+								transition={animation.textRevealTransition.slideIn}>
 								{data[0]}
 							</motion.span>
+
 							<motion.span
 								layout="position"
-								layoutId={`client_name_${client.replace(" ", "_")}`}
-								key={`client_name_${client.replace(" ", "_")}`}
-								className="text-[0.8rem] tracking-wide uppercase font-semibold">
+								transition={{ delay: animation.scalingDuration }}
+								layoutId={`client_name_${client.replace(" ", "_")}_text`}
+								key={`client_name_${client.replace(" ", "_")}_text`}
+								className="text-[0.8rem] tracking-wide uppercase font-semibold px-1">
 								{client}
 							</motion.span>
+
 							<motion.span
 								initial="initial"
 								animate="animate"
 								exit="exit"
-								variants={animation.textRevealAnimation.slideIn}>
+								className="pr-1"
+								variants={animation.textRevealAnimation.slideIn}
+								transition={animation.textRevealTransition.slideIn}>
 								{data[1]}
 							</motion.span>
 						</motion.div>
