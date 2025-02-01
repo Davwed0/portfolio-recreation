@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import * as animation from "../components/animations";
 import Lenis from "lenis";
 import { useRef, useEffect } from "react";

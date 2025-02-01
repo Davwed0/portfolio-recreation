@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { useCurrentRoute } from "../hooks/useCurrentRoute";
 import { clsx } from "clsx";
-import { TitleText } from "./TitleText";
+import { TitleText } from "./titleText";
 import * as animations from "./animations";
 
 export default function Menu() {
@@ -13,10 +12,7 @@ export default function Menu() {
 	const selectedStyle =
 		"user-select-none pointer-events-none select-none font-bold";
 
-	const handleClick = (
-		e: React.MouseEvent<HTMLAnchorElement>,
-		href: string
-	) => {
+	const handleClick = (href: string) => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 		setTimeout(() => {
 			window.history.pushState({}, "", href);
@@ -38,7 +34,7 @@ export default function Menu() {
 				animate={currentRoute == "/" ? "goFat" : "goSmol"}
 				exit={currentRoute == "/" ? "goFat" : "goSmol"}
 				key="/">
-				<a onClick={(e) => handleClick(e, "/")}>
+				<a onClick={() => handleClick("/")}>
 					<TitleText text="Works," word={currentRoute == "/"} index={0} />
 				</a>
 			</motion.div>
@@ -55,7 +51,7 @@ export default function Menu() {
 					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/about" ? "goFat" : "goSmol"}
 					key="/about">
-					<a onClick={(e) => handleClick(e, "/about")}>
+					<a onClick={() => handleClick("/about")}>
 						<TitleText
 							text="About,"
 							word={currentRoute == "/about"}
@@ -74,7 +70,7 @@ export default function Menu() {
 					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					exit={currentRoute == "/contact" ? "goFat" : "goSmol"}
 					key="/contact">
-					<a onClick={(e) => handleClick(e, "/contact")}>
+					<a onClick={() => handleClick("/contact")}>
 						<TitleText
 							text="Contact"
 							word={currentRoute == "/contact"}

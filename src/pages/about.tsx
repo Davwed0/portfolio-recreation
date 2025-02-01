@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import * as animation from "../components/animations";
 import clients from "../clients.json";
 
