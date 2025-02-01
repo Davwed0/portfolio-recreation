@@ -21,13 +21,13 @@ export const fadeIn = {
 export const boxTransition = {
 	ease: [0.76, 0, 0.24, 1],
 	duration: 1.2,
-	staggerChildren: 0.05,
+	staggerChildren: 0.1,
 };
 
 export const boxAnimation = {
 	initial: {
 		opacity: 1,
-		translateY: "200%",
+		translateY: "100vh",
 		transition: boxTransition,
 	},
 	animate: {
@@ -56,13 +56,13 @@ export const scalingTransition = {
 export const scalingAnimation = {
 	goFat: {
 		fontSize: "8.8rem",
-		lineHeight: "7.6rem",
+		lineHeight: "6rem",
 		"--color": "#111827",
 		transition: scalingTransition,
 	},
 	goSmol: {
-		fontSize: "1rem",
-		lineHeight: "1.4rem",
+		fontSize: "1.3rem",
+		lineHeight: "1rem",
 		"--color": "#9ca3af",
 		transition: scalingTransition,
 	},
@@ -80,8 +80,8 @@ export const textRevealTransition = {
 	},
 	slideIn: {
 		ease: [0.61, 1, 0.88, 1],
-		duration: 0.6,
-		delay: 0.5,
+		duration: 0.2,
+		staggerChildren: 0.06,
 	},
 };
 
@@ -106,12 +106,12 @@ export const textRevealAnimation = {
 		initial: {
 			translateY: "200%",
 			opacity: 0,
-			transition: { ...textRevealTransition.slideIn },
+			transition: textRevealTransition.slideIn,
 		},
 		animate: {
 			translateY: "0%",
 			opacity: 1,
-			transition: { ...textRevealTransition.slideIn },
+			transition: textRevealTransition.slideIn,
 		},
 		exit: {
 			translateY: "-200%",

@@ -1,0 +1,74 @@
+[
+	{
+		"id": "angus_emmerson",
+		"name": "Angus Emmerson",
+		"rowIndex": 0,
+		"text": [
+			"(01)",
+			"a video editor based in Los Angeles, specialized in immersive"
+		]
+	},
+	{
+		"id": "pebble",
+		"name": "Pebble",
+		"rowIndex": 2,
+		"text": [
+			"effects and sound design. (02)",
+			"an all-electric travel trailer that’s bringing an"
+		]
+	},
+	{
+		"id": "mooders",
+		"name": "Mooders",
+		"rowIndex": 1,
+		"text": [
+			"iPhone-like experience to RVing. (03)",
+			"a music and sound design agency based"
+		]
+	},
+	{
+		"id": "theud",
+		"name": "Theud",
+		"rowIndex": 3,
+		"text": [
+			"in France. (04)",
+			"a creative director mainly working in the music industry with"
+		]
+	},
+	{
+		"id": "storm",
+		"name": "Storm",
+		"rowIndex": 1,
+		"text": [
+			"various rappers and artists. (05)",
+			"a production company specialized in"
+		]
+	},
+	{
+		"id": "denise",
+		"name": "Denise",
+		"rowIndex": 5,
+		"text": [
+			"commercials, music videos, and brand content. (06)",
+			"an efficient multifaceted"
+		]
+	},
+	{
+		"id": "firm",
+		"name": "Firm",
+		"rowIndex": 1,
+		"text": [
+			"company supporting brands in the production of content. (07)",
+			"a visual studio"
+		]
+	},
+	{
+		"id": "atck",
+		"name": "ATCK",
+		"rowIndex": 2,
+		"text": [
+			"dedicated to film post-production based in Paris. (08)",
+			"a creative production house based in Paris."
+		]
+	}
+]

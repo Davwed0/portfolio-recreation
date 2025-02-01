@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { useCurrentRoute } from "../hooks/useCurrentRoute";
 import { clsx } from "clsx";
@@ -17,13 +17,15 @@ export default function Menu() {
 		e: React.MouseEvent<HTMLAnchorElement>,
 		href: string
 	) => {
-		e.preventDefault();
-		window.history.pushState({}, "", href);
-		window.dispatchEvent(new PopStateEvent("popstate"));
+		window.scrollTo({ top: 0, behavior: "smooth" });
+		setTimeout(() => {
+			window.history.pushState({}, "", href);
+			window.dispatchEvent(new PopStateEvent("popstate"));
+		}, 500);
 	};
 
 	return (
-		<div className="fixed grid grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4 w-[calc(100vw-4rem)] space-x-1 h-[8rem] overflow-hidden z-50">
+		<div className="fixed w-[calc(100%-2rem)] grid gap-x-4 grid-cols-[repeat(16,minmax(0,1fr))] h-[9rem] overflow-hidden z-50">
 			<motion.div
 				className={clsx(
 					defaultStyle,
@@ -40,7 +42,7 @@ export default function Menu() {
 					<TitleText text="Works," word={currentRoute == "/"} index={0} />
 				</a>
 			</motion.div>
-			<motion.div className="col-span-auto flex flex-row gap-x-4">
+			<motion.div className="col-span-auto flex flex-row gap-x-1">
 				<motion.div
 					className={clsx(
 						defaultStyle,
