@@ -6,7 +6,8 @@
 		"text": [
 			"(01)",
 			"a video editor based in Los Angeles, specialized in immersive"
-		]
+		],
+		"awards": ["SOTD, DEV", "-", "-"]
 	},
 	{
 		"id": "pebble",
@@ -15,7 +16,8 @@
 		"text": [
 			"effects and sound design. (02)",
 			"an all-electric travel trailer that’s bringing an"
-		]
+		],
+		"awards": ["SOTD, DEV", "-", "FOTD"]
 	},
 	{
 		"id": "mooders",
@@ -24,7 +26,8 @@
 		"text": [
 			"iPhone-like experience to RVing. (03)",
 			"a music and sound design agency based"
-		]
+		],
+		"awards": ["SOTD, DEV", "WOTD", "FOTD"]
 	},
 	{
 		"id": "theud",
@@ -33,7 +36,8 @@
 		"text": [
 			"in France. (04)",
 			"a creative director mainly working in the music industry with"
-		]
+		],
+		"awards": ["SOTD, DEV", "WOTD", "FOTD"]
 	},
 	{
 		"id": "storm",
@@ -42,7 +46,8 @@
 		"text": [
 			"various rappers and artists. (05)",
 			"a production company specialized in"
-		]
+		],
+		"awards": ["-", "WOTD", "-"]
 	},
 	{
 		"id": "denise",
@@ -51,7 +56,8 @@
 		"text": [
 			"commercials, music videos, and brand content. (06)",
 			"an efficient multifaceted"
-		]
+		],
+		"awards": ["-", "WOTD", "FOTD"]
 	},
 	{
 		"id": "firm",
@@ -60,7 +66,8 @@
 		"text": [
 			"company supporting brands in the production of content. (07)",
 			"a visual studio"
-		]
+		],
+		"awards": ["-", "-", "-"]
 	},
 	{
 		"id": "atck",
@@ -68,7 +75,9 @@
 		"rowIndex": 2,
 		"text": [
 			"dedicated to film post-production based in Paris. (08)",
-			"a creative production house based in Paris."
-		]
+			"a creative production house",
+			"based in Paris."
+		],
+		"awards": ["-", "WOTD", "FOTD"]
 	}
 ]

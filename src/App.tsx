@@ -4,30 +4,37 @@ import { useEffect } from "react";
 import useWindowSize from "./hooks/useWindowSize";
 import Menu from "./components/menu";
 
+// Page imports
 import About from "./pages/about";
 import Works from "./pages/works";
+import Contact from "./pages/contact";
+
+// Route configuration
+const routes = [
+	{ path: "/", element: <Works /> },
+	{ path: "/about", element: <About /> },
+	{ path: "/contact", element: <Contact /> },
+];
 
 function App() {
 	const location = useLocation();
-	const windowSize = useWindowSize();
+	const { width } = useWindowSize();
 
 	useEffect(() => {
-		document
-			.getElementById("root")
-			?.style.setProperty("--size", `${windowSize.width}`);
-	}, [windowSize]);
+		document.documentElement.style.setProperty("--size", `${width}`);
+	}, [width]);
 
 	return (
-		<>
+		<main className="relative">
 			<Menu />
 			<AnimatePresence mode="wait">
 				<Routes location={location} key={location.pathname}>
-					<Route index element={<Works />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/contacts" element={<div />} />
+					{routes.map(({ path, element }) => (
+						<Route key={path} path={path} element={element} />
+					))}
 				</Routes>
 			</AnimatePresence>
-		</>
+		</main>
 	);
 }
 

@@ -56,13 +56,13 @@ export const scalingTransition = {
 export const scalingAnimation = {
 	goFat: {
 		fontSize: "8.8rem",
-		lineHeight: "6rem",
+		lineHeight: "7rem",
 		"--color": "#111827",
 		transition: scalingTransition,
 	},
 	goSmol: {
 		fontSize: "1.3rem",
-		lineHeight: "1rem",
+		lineHeight: "2rem",
 		"--color": "#9ca3af",
 		transition: scalingTransition,
 	},
@@ -102,21 +102,38 @@ export const textRevealAnimation = {
 			translateY: "0%",
 		},
 	},
-	slideIn: {
-		initial: {
-			translateY: "200%",
-			opacity: 0,
-			transition: textRevealTransition.slideIn,
+	slideInContainer: {
+		hidden: {
+			y: "-100vy",
 		},
-		animate: {
-			translateY: "0%",
-			opacity: 1,
-			transition: textRevealTransition.slideIn,
+		visible: {
+			y: 0,
+			transition: {
+				when: "afterChildren",
+				staggerChildren: 0.01,
+				ease: [0.61, 1, 0.88, 1],
+			},
 		},
 		exit: {
-			translateY: "-200%",
+			y: "100vy",
+			transition: {
+				staggerChildren: 0.005,
+				ease: [0.61, 1, 0.88, 1],
+			},
+		},
+	},
+	slideIn: {
+		hidden: {
+			y: -20,
 			opacity: 0,
-			transition: { ...textRevealTransition.slideIn, delay: 0 },
+		},
+		visible: {
+			y: 0,
+			opacity: 1,
+		},
+		exit: {
+			y: 20,
+			opacity: 0,
 		},
 	},
 };

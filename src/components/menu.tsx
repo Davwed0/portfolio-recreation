@@ -1,84 +1,75 @@
 import { motion } from "framer-motion";
-import { useCurrentRoute } from "../hooks/useCurrentRoute";
+import { useLocation, Link } from "react-router-dom";
 import { clsx } from "clsx";
 import { TitleText } from "./titleText";
 import * as animations from "./animations";
 
+const menuItems = [
+	{ path: "/", text: "Works," },
+	{ path: "/about", text: "About," },
+	{ path: "/contact", text: "Contact" },
+];
+
 export default function Menu() {
-	const currentRoute = useCurrentRoute();
+	const { pathname } = useLocation();
 
 	const defaultStyle =
 		"text-[1rem] font-semibold text-[--color] hover:text-gray-900 h-fit";
 	const selectedStyle =
 		"user-select-none pointer-events-none select-none font-bold";
 
-	const handleClick = (href: string) => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-		setTimeout(() => {
-			window.history.pushState({}, "", href);
-			window.dispatchEvent(new PopStateEvent("popstate"));
-		}, 500);
-	};
-
 	return (
-		<div className="fixed w-[calc(100%-2rem)] grid gap-x-4 grid-cols-[repeat(16,minmax(0,1fr))] h-[9rem] overflow-hidden z-50">
+		<nav className="fixed w-[calc(100%-2rem)] grid gap-x-4 grid-cols-[repeat(16,minmax(0,1fr))] h-[9rem] overflow-hidden z-50">
 			<motion.div
 				className={clsx(
 					defaultStyle,
-					currentRoute == "/" && selectedStyle,
+					pathname === "/" && selectedStyle,
 					"col-span-5 origin-top-right text-right"
 				)}
 				layoutId="/"
 				variants={animations.scalingAnimation}
-				initial={currentRoute == "/" ? "goFat" : "goSmol"}
-				animate={currentRoute == "/" ? "goFat" : "goSmol"}
-				exit={currentRoute == "/" ? "goFat" : "goSmol"}
+				initial={pathname === "/" ? "goFat" : "goSmol"}
+				animate={pathname === "/" ? "goFat" : "goSmol"}
+				exit={pathname === "/" ? "goFat" : "goSmol"}
 				key="/">
-				<a onClick={() => handleClick("/")}>
-					<TitleText text="Works," word={currentRoute == "/"} index={0} />
-				</a>
+				<Link to="/">
+					<TitleText text="Works," word={pathname === "/"} index={0} />
+				</Link>
 			</motion.div>
 			<motion.div className="col-span-auto flex flex-row gap-x-1">
-				<motion.div
-					className={clsx(
-						defaultStyle,
-						currentRoute == "/about" && selectedStyle,
-						"col-span-5 origin-top-left text-left"
-					)}
-					layoutId="/about"
-					variants={animations.scalingAnimation}
-					initial={currentRoute == "/about" ? "goFat" : "goSmol"}
-					animate={currentRoute == "/about" ? "goFat" : "goSmol"}
-					exit={currentRoute == "/about" ? "goFat" : "goSmol"}
-					key="/about">
-					<a onClick={() => handleClick("/about")}>
-						<TitleText
-							text="About,"
-							word={currentRoute == "/about"}
-							index={1}
-						/>
-					</a>
-				</motion.div>
-				<motion.div
-					className={clsx(
-						defaultStyle,
-						currentRoute == "/contact" && selectedStyle
-					)}
-					layoutId="/contact"
-					variants={animations.scalingAnimation}
-					initial={currentRoute == "/contact" ? "goFat" : "goSmol"}
-					animate={currentRoute == "/contact" ? "goFat" : "goSmol"}
-					exit={currentRoute == "/contact" ? "goFat" : "goSmol"}
-					key="/contact">
-					<a onClick={() => handleClick("/contact")}>
-						<TitleText
-							text="Contact"
-							word={currentRoute == "/contact"}
-							index={2}
-						/>
-					</a>
-				</motion.div>
+				{menuItems.slice(1).map((item, index) => (
+					<motion.div
+						key={item.path}
+						className={clsx(
+							defaultStyle,
+							pathname === item.path && selectedStyle,
+							index === 0 && "col-span-5 origin-top-left text-left"
+						)}
+						layoutId={item.path}
+						variants={animations.scalingAnimation}
+						initial={pathname === item.path ? "goFat" : "goSmol"}
+						animate={pathname === item.path ? "goFat" : "goSmol"}
+						exit={pathname === item.path ? "goFat" : "goSmol"}>
+						{item.path === "/contact" ? (
+							<a href="mailto:filbert.tejalaksana@gmail.com" target="_blank">
+								<TitleText
+									text={item.text}
+									word={pathname === item.path}
+									index={index + 1}
+								/>
+							</a>
+						) : (
+							<Link to={item.path}>
+								<TitleText
+									text={item.text}
+									word={pathname === item.path}
+									index={index + 1}
+								/>
+							</Link>
+						)}
+					</motion.div>
+				))}
 			</motion.div>
-		</div>
+		</nav>
 	);
 }
