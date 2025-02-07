@@ -1,71 +1,74 @@
 "use client";
 
-import { motion, frame, cancelFrame } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import * as animation from "../components/animations";
-import { ReactLenis } from "lenis/react";
-import type { LenisRef } from "lenis/react";
-import Lenis from "lenis";
-import Snap from "lenis/snap";
-import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 
 import clients from "../clients.json";
 const aspectRatios = [16 / 9, 1, 16 / 9, 3 / 4, 16 / 9, 1];
 
 export default function Works() {
-    const lenis = new Lenis();
+    const { scrollYProgress } = useScroll();
+    const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+    const [currentClient, setCurrentClient] = useState(0);
+
+    scrollYProgress.onChange((value) => {
+        let clientIndex = Math.floor(value * clients.length);
+        clientIndex = Math.min(clients.length, Math.max(0, clientIndex));
+
+        setCurrentClient(clientIndex);
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);
-
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
     }, []);
 
     return (
-        <ReactLenis root>
-            <div
+        <div
+            className={clsx(
+                "absolute flex w-full scroll-pt-40 flex-col space-x-1 pb-8 pr-8 pt-0",
+                "xl: xl:left-0 xl:top-0 xl:h-full xl:w-[calc(100%-2rem)] xl:p-4 xl:pb-[45vh] xl:pt-[45vh]",
+            )}
+        >
+            <motion.div
                 className={clsx(
-                    "absolute flex w-full scroll-pt-40 flex-col space-x-1 pb-8 pr-8 pt-0",
-                    "xl: xl:left-0 xl:top-0 xl:h-full xl:w-[calc(100%-2rem)] xl:p-4 xl:pb-[45vh] xl:pt-[45vh]",
+                    "fixed z-50 grid w-[calc(100%-2rem)] grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4",
                 )}
             >
-                <motion.div
-                    className={clsx(
-                        "fixed z-50 grid w-[calc(100%-2rem)] grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4",
-                    )}
-                >
-                    <motion.div className="col-span-2 col-start-6 flex flex-col">
-                        {clients.map((client) => (
-                            <motion.div
-                                layout="position"
-                                layoutId={`layout_${client.id}_text`}
-                                key={`layout_${client.id}_text`}
-                                className="user-select-none flex select-none items-center justify-between text-[0.8rem] font-semibold uppercase tracking-wide"
-                                onClick={() => {
-                                    lenis.scrollTo(`#${client.id}_tag`);
-                                }}
-                            >
-                                {client.name}
-
-                                <motion.span
-                                    className="ml-2 opacity-0"
-                                    initial={{ opacity: 0 }}
-                                    transition={{
-                                        duration: 0.2,
-                                    }}
-                                >
-                                    ◄
-                                </motion.span>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                <motion.div className="col-span-2 col-start-6 flex flex-col">
+                    {clients.map((client) => (
+                        <motion.div
+                            layout="position"
+                            layoutId={`layout_${client.id}_text`}
+                            key={`layout_${client.id}_text`}
+                            className="user-select-none flex select-none items-center justify-between text-[0.8rem] font-semibold uppercase tracking-wide"
+                            onClick={() => {
+                                document
+                                    .getElementById(`${client.id}_tag`)
+                                    ?.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                            }}
+                        >
+                            {client.name}
+                        </motion.div>
+                    ))}
                 </motion.div>
+                <motion.span
+                    className="user-select-none relative ml-2 h-4 select-none items-center justify-between text-[0.8rem] font-semibold uppercase tracking-wide"
+                    transition={{
+                        duration: 0.2,
+                    }}
+                    animate={{
+                        top: `${currentClient}rem`,
+                    }}
+                >
+                    ◄
+                </motion.span>
+            </motion.div>
 
+            <motion.div style={{ y: `${y}%` }}>
                 {clients.map((client, index) => (
                     <motion.div
                         key={`client_row_${index}`}
@@ -121,8 +124,7 @@ export default function Works() {
                         ))}
                     </motion.div>
                 ))}
-                <div className="relative mb-24 grid w-full grid-cols-[repeat(16,minmax(0,1fr))] gap-x-4 pb-24"></div>
-            </div>
-        </ReactLenis>
+            </motion.div>
+        </div>
     );
 }
