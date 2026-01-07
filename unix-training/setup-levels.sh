@@ -347,13 +347,16 @@ chown -R level19:level19 /home/level19
 chmod 755 /home/level19/backups
 
 # Create a dated backup for the restore exercise
+# Using yesterday's date to ensure the backup exists when the user attempts the challenge
+BACKUP_DATE=$(date -d "yesterday" +%Y-%m-%d 2>/dev/null || date -v-1d +%Y-%m-%d 2>/dev/null || echo "2026-01-06")
 cd /home/level19
-tar -czf /home/level19/backups/backup-2026-01-06.tar.gz -C /home/level19/data .
+tar -czf /home/level19/backups/backup-${BACKUP_DATE}.tar.gz -C /home/level19/data .
 cd /
 
 echo "All levels configured successfully!"
 echo "Password list for verification:"
-for i in $(seq 0 19); do
+for i in $(seq 0 18); do
     echo "Level $i -> Level $((i+1)): ${PASSWORDS[$i]}"
 done > /tmp/passwords.txt
+echo "Level 19 (Final): ${PASSWORDS[19]}" >> /tmp/passwords.txt
 chmod 600 /tmp/passwords.txt

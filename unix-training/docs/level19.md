@@ -25,8 +25,8 @@ Use the `backup-manager.sh` script to complete the final challenge. The script m
 # Create a backup
 ./backup-manager.sh -c /home/level19/data -d /home/level19/backups
 
-# Restore from specific date
-./backup-manager.sh -x 2026-01-06 -d /home/level19/backups
+# Restore from specific date (check -l output for available dates)
+./backup-manager.sh -x YYYY-MM-DD -d /home/level19/backups
 ```
 
 ## Solution Approach
@@ -37,12 +37,16 @@ cat backup-manager.sh
 
 # List available backups
 ./backup-manager.sh -l
+# This will show the available backup with its date
 
-# Restore the backup from 2026-01-06
-./backup-manager.sh -x 2026-01-06
+# Restore the backup (use the date shown in the list)
+# The backup is from yesterday's date
+./backup-manager.sh -x YYYY-MM-DD  # Replace with the actual date from -l output
 
 # The restored content will show the final message!
 ```
+
+**Tip**: The exact date format required is YYYY-MM-DD. Use the `-l` flag first to see what backup files exist.
 
 ## What You'll Learn
 - Using getopts for option parsing
