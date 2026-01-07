@@ -5,7 +5,7 @@ Learn to connect via SSH and read your first file.
 
 ## Login Information
 - Host: localhost (or your Docker host IP)
-- Port: 22
+- Port: 2222 (when using docker-compose) or 22 (inside container)
 - Username: level0
 - Password: level0
 
@@ -19,7 +19,7 @@ Find the password for level1 in your home directory.
 
 ## Solution Approach
 ```bash
-ssh level0@localhost
+ssh level0@localhost -p 2222
 ls
 cat readme
 ```

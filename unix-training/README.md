@@ -209,4 +209,10 @@ Inspired by the [Bandit](https://overthewire.org/wargames/bandit/) wargame from 
 
 ## ⚠️ Security Note
 
-This container runs SSH with password authentication for educational purposes. Do not expose it directly to the internet. Use it only in isolated, trusted networks or locally.
+This container runs SSH with password authentication for educational purposes. **Important security considerations:**
+
+- **Default passwords**: Initial login uses username as password (e.g., `level0:level0`) for easy first access
+- **Randomized level passwords**: Passwords between levels are randomly generated per container instance
+- **Network isolation**: Do not expose this container directly to the internet
+- **Local use only**: Use it only in isolated, trusted networks or locally on your development machine
+- **Educational context**: This setup is intentionally simple for learning - not suitable for production use
