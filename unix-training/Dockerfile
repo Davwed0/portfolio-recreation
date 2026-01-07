@@ -1,31 +1,31 @@
-FROM ubuntu:22.04
+FROM alpine:latest
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y \
-    openssh-server \
-    sudo \
-    man-db \
-    manpages-posix \
-    vim \
+# Note: BusyBox provides many basic Unix utilities (tar, gzip, bzip2, grep, sed, awk, etc.)
+RUN apk add --no-cache \
+    bash \
+    openssh \
+    shadow \
     nano \
     less \
-    gzip \
-    bzip2 \
-    tar \
-    p7zip-full \
-    unrar \
-    xxd \
-    cron \
-    && rm -rf /var/lib/apt/lists/*
+    man-db \
+    mandoc \
+    man-pages \
+    p7zip \
+    coreutils \
+    gawk \
+    util-linux \
+    findutils
 
 # Set up SSH
-RUN mkdir /var/run/sshd
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN mkdir -p /var/run/sshd
+RUN ssh-keygen -A
+RUN sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # Create users level0-level19
 RUN for i in $(seq 0 19); do \
-    useradd -m -s /bin/bash level$i && \
+    adduser -D -s /bin/bash level$i && \
     echo "level$i:level$i" | chpasswd; \
 done
 

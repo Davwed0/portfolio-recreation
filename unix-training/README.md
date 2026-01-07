@@ -15,7 +15,7 @@ This training system provides a safe, isolated environment to learn:
 
 ## 🏗️ Architecture
 
-- **Single Linux container** running Ubuntu 22.04
+- **Lightweight Alpine Linux container** for minimal footprint
 - **SSH access** on port 22 (or custom port)
 - **20 user accounts** (level0 through level19)
 - **Progressive difficulty** from basic commands to complex scripts
