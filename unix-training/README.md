@@ -37,7 +37,7 @@ This training system provides a safe, isolated environment to learn:
 | 9 | Advanced Pipelines | Multiple files, complex chains |
 | 10 | Redirection | stdout, stderr, file descriptors |
 | 11 | Base64 | Encoding/decoding |
-| 12 | Compression Chain | 8+ nested layers (gzip, bzip2, tar, 7z, etc.) |
+| 12 | Compression Chain | 8 nested layers (base64, gzip, bzip2, tar) |
 | 13 | Archive Formats | tar, unrar, 7z |
 | 14 | System Inspection | ps, env, environment variables |
 | 15 | Cron Jobs | Scheduled tasks, log files |

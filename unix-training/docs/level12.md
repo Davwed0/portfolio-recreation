@@ -1,25 +1,24 @@
 # Level 12: Very Long Compression Chain
 
 ## Goal
-Unpack a deeply nested compression chain (8+ layers).
+Unpack a deeply nested compression chain (8 layers).
 
 ## Login Information
 - Username: level12
 - Password: (found in level 11)
 
 ## Challenge
-Unpack 8+ nested compression layers to find the password.
+Unpack 8 nested compression layers to find the password.
 
-## Compression Layers (in reverse order)
+## Compression Layers (in reverse order for unpacking)
 1. Hexdump (xxd -r -p)
 2. Base64 decode
 3. Gunzip
-4. 7zip extract
-5. Gunzip again
-6. Tar extract
-7. Bunzip2
-8. Gunzip
-9. Base64 decode
+4. Bunzip2
+5. Tar extract
+6. Bunzip2 again
+7. Gunzip again
+8. Base64 decode
 
 ## Hints
 1. Start with `cat data.hex`
@@ -31,10 +30,9 @@ Unpack 8+ nested compression layers to find the password.
 ## Commands You'll Need
 - `xxd -r -p`: Reverse hexdump
 - `base64 -d`: Decode base64
-- `gunzip`: Decompress gzip files
-- `bunzip2`: Decompress bzip2 files
+- `gunzip`: Decompress gzip files (or `gzip -d`)
+- `bunzip2`: Decompress bzip2 files (or `bzip2 -d`)
 - `tar -xzf`: Extract tar archives
-- `7z x`: Extract 7z archives
 - `file`: Identify file types
 
 ## Solution Approach
@@ -43,37 +41,40 @@ mkdir /tmp/work12 && cd /tmp/work12
 cp ~/data.hex .
 
 # Layer 1: Reverse hexdump
-xxd -r -p data.hex > layer1
+xxd -r -p data.hex > layer7
 
-# Layer 2: Check file type and decode
-file layer1
-base64 -d layer1 > layer2
+# Layer 2: Check file type and decode base64
+file layer7
+base64 -d layer7 > layer6
 
 # Layer 3: Decompress gzip
+file layer6
+gunzip -c layer6 > layer5
+# OR: mv layer6 layer6.gz && gunzip layer6.gz
+
+# Layer 4: Decompress bzip2
+file layer5
+bunzip2 -c layer5 > layer4
+# OR: mv layer5 layer5.bz2 && bunzip2 layer5.bz2
+
+# Layer 5: Extract tar
+file layer4
+tar -xzf layer4
+# This extracts layer3
+
+# Layer 6: Decompress bzip2 again
+file layer3
+bunzip2 -c layer3 > layer2
+# OR: mv layer3 layer3.bz2 && bunzip2 layer3.bz2
+
+# Layer 7: Decompress gzip again
 file layer2
-gunzip -c layer2 > layer3
-# OR
-mv layer2 layer2.gz && gunzip layer2.gz
+gunzip -c layer2 > layer1
+# OR: mv layer2 layer2.gz && gunzip layer2.gz
 
-# Layer 4: Extract 7z
-file layer3
-7z x layer3
-
-# Continue checking file type and applying appropriate decompression...
-# This is iterative - use `file` after each step!
-
-file layer4.tar.gz
-tar -xzf layer4.tar.gz
-
-file layer3.bz2
-bunzip2 layer3.bz2
-
-file layer3
-gunzip -c layer3 > layer_next
-# OR mv layer3 layer3.gz && gunzip layer3.gz
-
-file layer1.b64
-base64 -d layer1.b64 > password.txt
+# Layer 8: Decode base64 to get password
+file layer1
+base64 -d layer1 > password.txt
 
 cat password.txt
 ```
@@ -82,6 +83,6 @@ cat password.txt
 - Working with multiple compression formats
 - Iterative problem solving
 - File type identification
-- Compression utilities (gzip, bzip2, 7z, tar)
+- Compression utilities (gzip, bzip2, tar)
 - Hexdump and base64 encoding
 - Patience and systematic debugging!

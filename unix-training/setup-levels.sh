@@ -142,7 +142,8 @@ chown level11:level11 /home/level11/data.txt
 chmod 644 /home/level11/data.txt
 
 echo "Setting up Level 12: Very long compression chain"
-# Level 12 -> Level 13: 8+ nested compression layers
+# Level 12 -> Level 13: 8 nested compression layers
+# Chain: Base64, gzip, bzip2, tar, bz2, gzip, base64, hexdump
 mkdir -p /home/level12
 cd /home/level12
 
@@ -150,31 +151,31 @@ cd /home/level12
 echo "${PASSWORDS[13]}" > password.txt
 
 # Layer 1: Base64
-base64 password.txt > layer1.b64
+base64 password.txt > layer1
 
 # Layer 2: gzip
-gzip -c layer1.b64 > layer2.gz
+gzip -c layer1 > layer2
 
 # Layer 3: bzip2
-bzip2 -c layer2.gz > layer3.bz2
+bzip2 -c layer2 > layer3
 
 # Layer 4: tar
-tar -czf layer4.tar.gz layer3.bz2
+tar -czf layer4 layer3
 
-# Layer 5: 7z
-7z a -y layer5.7z layer4.tar.gz > /dev/null 2>&1
+# Layer 5: bzip2 again
+bzip2 -c layer4 > layer5
 
 # Layer 6: gzip again
-gzip -c layer5.7z > layer6.gz
+gzip -c layer5 > layer6
 
-# Layer 7: base64
-base64 layer6.gz > layer7.b64
+# Layer 7: base64 again
+base64 layer6 > layer7
 
 # Layer 8: hexdump (final layer)
-xxd -p layer7.b64 | tr -d '\n' > data.hex
+xxd -p layer7 | tr -d '\n' > data.hex
 
 # Cleanup intermediate files
-rm -f password.txt layer1.b64 layer2.gz layer3.bz2 layer4.tar.gz layer5.7z layer6.gz layer7.b64
+rm -f password.txt layer1 layer2 layer3 layer4 layer5 layer6 layer7
 
 chown level12:level12 /home/level12/data.hex
 chmod 644 /home/level12/data.hex
