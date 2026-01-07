@@ -54,3 +54,28 @@ yarn dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+---
+
+## 🐳 Unix Training System
+
+This repository also includes a Docker-based Unix/Linux training environment with 20 progressive levels, similar to the Bandit wargame.
+
+### Quick Start
+
+```bash
+cd unix-training
+docker-compose up -d
+ssh level0@localhost -p 2222
+# Password: level0
+```
+
+### Features
+
+- 20 progressive levels teaching Unix fundamentals
+- SSH-based access to isolated training environment
+- Topics: file operations, text processing, compression, bash scripting
+- Complete documentation for each level
+- Safe, containerized environment for learning
+
+For detailed instructions, see [unix-training/README.md](unix-training/README.md) or [unix-training/QUICKSTART.md](unix-training/QUICKSTART.md)
