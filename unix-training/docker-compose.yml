@@ -1,0 +1,16 @@
+services:
+  unix-training:
+    build: .
+    container_name: unix-training
+    ports:
+      - "2222:22"
+    restart: unless-stopped
+    hostname: unix-training
+    environment:
+      - TZ=UTC
+    networks:
+      - training-network
+
+networks:
+  training-network:
+    driver: bridge
