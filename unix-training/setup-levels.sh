@@ -349,6 +349,7 @@ chmod 755 /home/level19/backups
 # Create a dated backup for the restore exercise
 # Using yesterday's date to ensure the backup exists when the user attempts the challenge
 # Try GNU date, then BSD date, finally fallback to a safe default if both fail
+# The fallback date is intentionally set to a date within the documented example range
 BACKUP_DATE=$(date -d "yesterday" +%Y-%m-%d 2>/dev/null || date -v-1d +%Y-%m-%d 2>/dev/null || echo "2026-01-06")
 cd /home/level19
 tar -czf /home/level19/backups/backup-${BACKUP_DATE}.tar.gz -C /home/level19/data .
