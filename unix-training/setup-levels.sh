@@ -356,8 +356,7 @@ cd /
 
 echo "All levels configured successfully!"
 echo "Password list for verification:"
-for i in $(seq 0 18); do
-    echo "Level $i -> Level $((i+1)): ${PASSWORDS[$i]}"
+for i in $(seq 1 19); do
+    echo "Level $((i-1)) -> Level $i: ${PASSWORDS[$i]}"
 done > /tmp/passwords.txt
-echo "Level 19 (Final): ${PASSWORDS[19]}" >> /tmp/passwords.txt
 chmod 600 /tmp/passwords.txt
